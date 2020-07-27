@@ -36,7 +36,7 @@ public class Image {
 
 	public Color getPixel(int x, int y) {
 		final int index = y * width + x;
-		if (index > this.pixels.length) {
+		if (index >= this.pixels.length) {
 			throw new IndexOutOfBoundsException("Index (" + x + ", " + y + ") is out of bounds, position " + index);
 		}
 		final Color c = this.pixels[index];
@@ -46,14 +46,19 @@ public class Image {
 		return c;
 	}
 	
-	public void write(String path) throws IOException{
+	BufferedImage toBufferedImage() {
 		final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		final int[] result = ( (DataBufferInt) image.getRaster().getDataBuffer() ).getData();
 		for(int i = 0; i < this.pixels.length; i++) {
 			if(this.pixels[i] != null)
 				result[i] = this.pixels[i].toRGBA();
 		}
-		ImageIO.write(image, "png", new File(path));
+		return image;
+	}
+	
+	
+	public void write(String path) throws IOException{
+		ImageIO.write(this.toBufferedImage(), "png", new File(path));
 	}
 	
 	public static Image load(String path) throws IOException{
