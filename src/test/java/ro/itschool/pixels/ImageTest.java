@@ -58,14 +58,4 @@ public class ImageTest extends TestCase {
 
 	}
 	
-	public void testMassigeImage() throws IOException{
-		Image i = Image.load("/Users/boogie666/Downloads/huge.jpg");
-		
-		long time = System.currentTimeMillis();
-		i.write("./huge.png");
-		System.out.println("Took " + (System.currentTimeMillis() - time) + "ns");
-		
-	}
-	
-	
 }
