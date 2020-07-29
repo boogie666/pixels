@@ -28,9 +28,9 @@ public class ImageTest extends TestCase {
 		i.putPixel(1, 0, new Color(0, 255, 0));
 		i.putPixel(2, 0, new Color(0, 0, 255));
 
-		assertEquals(i.getPixel(0, 0), new Color(255, 0, 0));
-		assertEquals(i.getPixel(1, 0), new Color(0, 255, 0));
-		assertEquals(i.getPixel(2, 0), new Color(0, 0, 255));
+		assertEquals(new Color(255, 0, 0), i.getPixel(0, 0));
+		assertEquals(new Color(0, 255, 0), i.getPixel(1, 0));
+		assertEquals(new Color(0, 0, 255), i.getPixel(2, 0));
 	}
 
 	public void testImageReadWriteCycle() throws IOException {
@@ -43,18 +43,29 @@ public class ImageTest extends TestCase {
 
 		Image i2 = Image.load(OUTPUT_FILE);
 
-		assertEquals(i2.getPixel(0, 0), new Color(255, 0, 0));
-		assertEquals(i2.getPixel(1, 0), new Color(0, 255, 0));
-		assertEquals(i2.getPixel(2, 0), new Color(0, 0, 255));
-		assertEquals(i2.getPixel(3, 0), Color.TRANSPARENT);
+		assertEquals(new Color(255, 0, 0), i2.getPixel(0, 0));
+		assertEquals(new Color(0, 255, 0), i2.getPixel(1, 0));
+		assertEquals(new Color(0, 0, 255), i2.getPixel(2, 0));
+		assertEquals(Color.TRANSPARENT, i2.getPixel(3, 0));
 	}
 
 	public void testNullIsTransparent() throws IOException {
 		Image i = new Image(1, 1);
-		assertEquals(i.getPixel(0, 0), Color.TRANSPARENT);
+		assertEquals(Color.TRANSPARENT, i.getPixel(0, 0));
 
 		i.putPixel(0, 0, null);
-		assertEquals(i.getPixel(0, 0), Color.TRANSPARENT);
+		assertEquals(Color.TRANSPARENT, i.getPixel(0, 0));
 
 	}
+	
+	public void testMassigeImage() throws IOException{
+		Image i = Image.load("/Users/boogie666/Downloads/huge.jpg");
+		
+		long time = System.currentTimeMillis();
+		i.write("./huge.png");
+		System.out.println("Took " + (System.currentTimeMillis() - time) + "ns");
+		
+	}
+	
+	
 }
