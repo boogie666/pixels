@@ -102,5 +102,8 @@ public class Image {
 		final BufferedImage image = ImageIO.read(new File(path));
 		return new Image(image);
 	}
-
+	
+	public BufferedImage getRawImage() {
+		return image;
+	}
 }
